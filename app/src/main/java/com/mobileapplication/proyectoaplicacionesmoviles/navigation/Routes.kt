@@ -3,12 +3,18 @@ package com.mobileapplication.proyectoaplicacionesmoviles.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object WelcomeScreen
+object Welcome
 @Serializable
-object AboutScreen
+object About
 @Serializable
-object LoginScreen
+object Login
 @Serializable
-object ProfileScreen
+object Profile
 @Serializable
-object SignUpScreen
+object SignUp
+@Serializable
+object Home
+@Serializable
+object TabBar
+
+

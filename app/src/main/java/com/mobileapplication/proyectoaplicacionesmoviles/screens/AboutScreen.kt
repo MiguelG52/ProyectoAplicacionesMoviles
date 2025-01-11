@@ -23,7 +23,7 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 
 @Preview
 @Composable
-fun AboutScren(){
+fun AboutScreen(){
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -39,18 +39,11 @@ fun AboutBody(){
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Acerca de la aplicación",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
-            color = BlueSecondary,
-            textAlign = TextAlign.Center
-        )
         Spacer(modifier = Modifier.size(16.dp))
         Image(
             painter = painterResource(id = R.drawable.emocional),
             contentDescription = "Imagen de bienvenida",
-            modifier = Modifier.size(128.dp)
+            modifier = Modifier.size(64.dp)
         )
         Spacer(modifier = Modifier.size(16.dp))
         Text(
