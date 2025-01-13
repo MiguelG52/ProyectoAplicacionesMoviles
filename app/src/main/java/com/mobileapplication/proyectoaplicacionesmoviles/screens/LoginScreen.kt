@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,12 +21,11 @@ import androidx.compose.ui.unit.sp
 import com.mobileapplication.proyectoaplicacionesmoviles.R
 import com.mobileapplication.proyectoaplicacionesmoviles.components.Input
 import com.mobileapplication.proyectoaplicacionesmoviles.components.PrimaryButton
-import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BluePrimary
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 
-@Preview
+
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navigateToHome: () -> Unit) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -35,7 +33,7 @@ fun LoginScreen(){
     ){
         LoginHeader()
         Spacer(modifier = Modifier.size(16.dp))
-        LoginBody()
+        LoginBody(navigateToHome)
     }
 }
 
@@ -67,12 +65,12 @@ fun LoginHeader(){
 }
 
 @Composable
-fun LoginBody() {
+fun LoginBody(navigateToHome: () -> Unit) {
     Column {
         Input("Email", "text", "Ingresa tu email", icon = painterResource(id = R.drawable.email)) {}
         Spacer(modifier = Modifier.size(16.dp))
         Input("Contraseña", "password", "Ingresa tu contraseña", icon = painterResource(id = R.drawable.lock)) {}
         Spacer(modifier = Modifier.size(26.dp))
-        PrimaryButton(text = "Iniciar Sesión", onClick = { })
+        PrimaryButton(text = "Iniciar Sesión", onClick = { navigateToHome()})
     }
 }

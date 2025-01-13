@@ -24,9 +24,9 @@ import com.mobileapplication.proyectoaplicacionesmoviles.components.SecondaryBut
 
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 
-@Preview
+
 @Composable
-fun WelcomeScreen(modifier: Modifier = Modifier) {
+fun WelcomeScreen(navigateToLogin:()->Unit, navigateToSignUp: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +35,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
     ) {
         Header(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.size(16.dp))
-        Body(modifier = Modifier.fillMaxWidth())
+        Body(modifier = Modifier.fillMaxWidth(), navigateToLogin, navigateToSignUp)
     }
 }
 
@@ -62,14 +62,14 @@ fun Header(modifier: Modifier) {
 }
 
 @Composable
-fun Body(modifier: Modifier) {
+fun Body(modifier: Modifier, navigateToLogin: () -> Unit, navigateToSignUp: () -> Unit) {
     Column(
         modifier = modifier.padding(horizontal = 32.dp, vertical = 16.dp ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        PrimaryButton(text = "Iniciar Sesión", onClick = { })
+        PrimaryButton(text = "Iniciar Sesión", onClick = { navigateToLogin()})
         Spacer(modifier = Modifier.size(16.dp))
-        SecondaryButton(text = "Crear Cuenta", onClick = { })
+        SecondaryButton(text = "Crear Cuenta", onClick = { navigateToSignUp()})
     }
 }
 

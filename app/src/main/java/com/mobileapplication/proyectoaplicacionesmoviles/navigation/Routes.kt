@@ -16,5 +16,7 @@ object SignUp
 object Home
 @Serializable
 object TabBar
-
-
+@Serializable
+object ContentDetails
+@Serializable
+object Content

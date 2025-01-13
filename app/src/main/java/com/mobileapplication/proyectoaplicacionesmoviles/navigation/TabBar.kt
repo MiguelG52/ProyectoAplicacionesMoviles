@@ -3,6 +3,8 @@ package com.mobileapplication.proyectoaplicacionesmoviles.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
@@ -20,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mobileapplication.proyectoaplicacionesmoviles.R
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.AboutScreen
@@ -31,7 +32,6 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.GraySecondary
 
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBar() {
@@ -66,13 +66,13 @@ fun TabBar() {
                             contentDescription = null,
                             modifier = Modifier
                                 .size(30.dp)
-                                .padding(end = 8.dp) // Espaciado entre el icono y el texto
+                                .padding(end = 8.dp)
                         )
                         Text(
                             text = titles[selectedTabIndex],
                             fontWeight = FontWeight.SemiBold,
                             color = BlueSecondary,
-                            modifier = Modifier.weight(1f) // Empuja el texto hacia la izquierda
+                            modifier = Modifier.weight(1f)
                         )
                     }
                 },
@@ -118,7 +118,11 @@ fun TabBar() {
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.padding(paddingValues).background(GraySecondary)
+            modifier = Modifier.padding(paddingValues)
+                .fillMaxHeight()
+                .background(GraySecondary).verticalScroll(
+                rememberScrollState()
+            )
             ) {
             // Contenido de las pestañas
             when (selectedTabIndex) {

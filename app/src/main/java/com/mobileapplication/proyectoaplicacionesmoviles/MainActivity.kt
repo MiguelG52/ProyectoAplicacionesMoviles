@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.mobileapplication.proyectoaplicacionesmoviles.navigation.TabBar
+import com.mobileapplication.proyectoaplicacionesmoviles.navigation.Navigation
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.ProyectoAplicacionesMovilesTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ProyectoAplicacionesMovilesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TabBar()
+                    Navigation()
                 }
             }
         }
