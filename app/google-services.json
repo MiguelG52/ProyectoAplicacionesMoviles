@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1094835736232",
+    "firebase_url": "https://emoi-12d19-default-rtdb.firebaseio.com",
+    "project_id": "emoi-12d19",
+    "storage_bucket": "emoi-12d19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094835736232:android:33bc21457b70b59f0afc9d",
+        "android_client_info": {
+          "package_name": "com.mobileapplication.proyectoaplicacionesmoviles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYHzOsd_Cmu5Drp5SJY3wp65x4qrKHDAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
