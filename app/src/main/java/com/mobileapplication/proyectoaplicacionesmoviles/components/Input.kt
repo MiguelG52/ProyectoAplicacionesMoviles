@@ -29,25 +29,25 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.Gray
 
 
 @Composable
-fun Input(name: String, type: String, placeholder: String, icon: Painter?, onClickAction: () -> Unit) {
+fun Input(value:String,name: String, type: String, placeholder: String, icon: Painter?, onValueChange: (String) -> Unit) {
     Column {
         Text(text = name,fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
         Spacer(modifier = Modifier.size(8.dp))
         if (type == "date") {
             PrimaryDatePicker(placeholder = placeholder, icon = icon)
         } else {
-            PrimaryTextField(placeholder = placeholder, icon = icon, isPassword = type == "password")
+            PrimaryTextField(placeholder = placeholder, icon = icon, isPassword = type == "password", value = value, onValueChange = onValueChange )
         }
     }
 }
 
 @Composable
-fun PrimaryTextField(placeholder: String, icon: Painter?, isPassword: Boolean = false){
-    var value by remember { mutableStateOf("") }
+fun PrimaryTextField(value: String, onValueChange: (String) -> Unit, placeholder: String, icon: Painter?, isPassword: Boolean = false){
+
     OutlinedTextField(
         value = value,
         singleLine = true,
-        onValueChange = {value = it},
+        onValueChange = onValueChange,
         placeholder = { Text(placeholder) },
         shape = RoundedCornerShape(30.dp),
         colors = OutlinedTextFieldDefaults.colors(

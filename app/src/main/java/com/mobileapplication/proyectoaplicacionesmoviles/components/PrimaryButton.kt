@@ -1,5 +1,6 @@
 package com.mobileapplication.proyectoaplicacionesmoviles.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -13,7 +14,15 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
-        onClick = onClick,
+        onClick = {
+            try {
+                onClick()
+            } catch (e: Exception) {
+                // Manejar el error apropiadamente
+                Log.e("PrimaryButton", "Error on button click", e)
+            }
+
+        },
         modifier = modifier.fillMaxWidth().height(55.dp),
         colors = ButtonDefaults.buttonColors(BlueSecondary)
     ) {

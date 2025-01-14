@@ -13,6 +13,12 @@ appcompat = "1.7.0"
 constraintlayout = "2.2.0"
 navigationCompose = "2.8.2"
 kotlinSerialization = "1.6.3"
+googleServiceVersion = "4.3.15"
+cloudStorage = "21.0.1"
+firebaseAuth = "23.1.0"
+cloudFirestore = "25.1.1"
+playServicesAuth = "21.3.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,9 +40,13 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-compose = { module="androidx.navigation:navigation-compose", version.ref = "navigationCompose"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization"}
+firebaseAuth = { group = "com.google.firebase", name="firebase-auth", version.ref="firebaseAuth"}
+firebaseCloud = { group = "com.google.firebase", name="firebase-storage", version.ref="cloudStorage"}
+firebaseFirestore = { group = "com.google.firebase", name="firebase-firestore", version.ref="cloudFirestore"}
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
-
+googleService = {id = "com.google.gms.google-services", version.ref = "googleServiceVersion" }

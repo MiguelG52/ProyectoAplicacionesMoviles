@@ -32,7 +32,7 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 fun AboutScreen(){
     Column(modifier = Modifier
         .fillMaxHeight()
-        .padding(horizontal = 12.dp, vertical = 12.dp),
+        .padding(horizontal = 12.dp, vertical = 8.dp),
     ){
         Spacer(modifier = Modifier.size(16.dp))
         AboutBody()

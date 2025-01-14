@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.googleService)
 }
 
 android {
@@ -65,12 +66,20 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
     implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.2.3")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation(libs.firebaseAuth)
+    implementation(libs.firebaseCloud)
+    implementation(libs.firebaseFirestore)
+
     implementation(libs.material)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
