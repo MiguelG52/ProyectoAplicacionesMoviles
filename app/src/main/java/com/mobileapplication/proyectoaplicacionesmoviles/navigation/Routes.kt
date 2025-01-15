@@ -18,5 +18,4 @@ object Home
 object TabBar
 @Serializable
 object ContentDetails
-@Serializable
-object Content
+

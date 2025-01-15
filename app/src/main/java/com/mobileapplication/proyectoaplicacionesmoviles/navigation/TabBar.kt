@@ -23,6 +23,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.mobileapplication.proyectoaplicacionesmoviles.R
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.AboutScreen
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.HomeScreen
@@ -34,7 +35,7 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.GraySecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabBar() {
+fun TabBar(navController: NavHostController) {
 
     val tabs = listOf("Inicio", "Perfil", "Test", "Acerca De")
     val titles = listOf("Inicio", "Perfil", "Test", "Acerca De")
@@ -47,6 +48,7 @@ fun TabBar() {
     )
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -126,7 +128,7 @@ fun TabBar() {
             ) {
             // Contenido de las pestañas
             when (selectedTabIndex) {
-                0 -> HomeScreen()
+                0 -> HomeScreen(navController)
                 1 -> ProfileScreen()
                 2 -> TestScreen()
                 3 -> AboutScreen()

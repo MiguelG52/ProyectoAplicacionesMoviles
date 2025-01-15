@@ -1,5 +1,6 @@
 package com.mobileapplication.proyectoaplicacionesmoviles.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobileapplication.proyectoaplicacionesmoviles.R
@@ -29,14 +30,11 @@ import com.mobileapplication.proyectoaplicacionesmoviles.components.Input
 import com.mobileapplication.proyectoaplicacionesmoviles.components.PrimaryButton
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 import androidx.compose.ui.platform.LocalContext
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.mobileapplication.proyectoaplicacionesmoviles.firebase.AuthManager
+import com.mobileapplication.proyectoaplicacionesmoviles.firebase.AuthRes
+import kotlinx.coroutines.launch
 
 
-@Preview
 @Composable
 fun SignUpScreen(auth: AuthManager) {
     Column(
@@ -46,7 +44,7 @@ fun SignUpScreen(auth: AuthManager) {
     ){
         SignUpHeader()
         Spacer(modifier = Modifier.size(16.dp))
-        SignUpForm()
+        SignUpForm( auth = auth)
     }
 }
 @Composable
@@ -76,16 +74,17 @@ fun SignUpHeader(){
     }
 }
 @Composable
-fun SignUpForm(){
-    val context = LocalContext.current
+fun SignUpForm(auth: AuthManager){
     var name by remember { mutableStateOf("") }
-    var birthDate by remember { mutableStateOf("") }
+    var birthday by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val isNameValid by remember { mutableStateOf(true) }
     val isBirthDateValid by remember { mutableStateOf(true) }
     val isEmailValid by remember { mutableStateOf(true) }
     val isPasswordValid by remember { mutableStateOf(true) }
+    val scope  = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -94,7 +93,7 @@ fun SignUpForm(){
         if (!isNameValid) Text("El nombre es obligatorio", color = Color.Red)
         Spacer(modifier = Modifier.size(16.dp))
 
-        Input(value = birthDate, onValueChange = { birthDate = it }, name = "Fecha de Nacimiento", type = "date", placeholder = "Ingresa tu fecha de nacimiento", icon = painterResource(id = R.drawable.icon_calendario_morado))
+        Input(value = birthday, onValueChange = { birthday = it }, name = "Fecha de Nacimiento", type = "date", placeholder = "Ingresa tu fecha de nacimiento", icon = painterResource(id = R.drawable.icon_calendario_morado))
         if (!isBirthDateValid) Text("La fecha de nacimiento es obligatoria", color = Color.Red)
         Spacer(modifier = Modifier.size(16.dp))
 
@@ -108,39 +107,32 @@ fun SignUpForm(){
 
         PrimaryButton(text = "Crear cuenta", onClick = {
             if (isNameValid && isBirthDateValid && isEmailValid && isPasswordValid) {
-                onSignUp(name, birthDate, email, password) { success, message ->
-                    if (success) {
-                        Toast.makeText(context, "Cuenta creada exitosamente", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                    }
+                scope.launch {
+                    onSignUp(name, birthday, email, password, auth = auth, context)
                 }
             }
         })
     }
 }
 
-private fun onSignUp(
+private suspend fun onSignUp(
     name: String,
-    birthDate: String,
+    birthday: String,
     email: String,
     password: String,
-    onResult: (Boolean, String) -> Unit
-){
-    val auth = FirebaseAuth.getInstance()
-    auth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                onResult(true, "Cuenta creada")
-            } else {
-                val exception = task.exception
-                val message = when (exception) {
-                    is FirebaseAuthWeakPasswordException -> "Contraseña débil"
-                    is FirebaseAuthInvalidCredentialsException -> "Credenciales inválidas"
-                    is FirebaseAuthUserCollisionException -> "El email ya está en uso"
-                    else -> "Error al crear la cuenta"
-                }
-                onResult(false, message)
-            }
+    auth: AuthManager,
+    context: Context
+) {
+    if(email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()) {
+        when (val result = auth.createUserWithEmailAndPassword(email, password, name, birthday)) {
+            is AuthRes.Success -> {
+            Toast.makeText(context, "Se ha creado el usuario correctamente", Toast.LENGTH_LONG).show()
         }
+            is AuthRes.Error -> {
+            Toast.makeText(context, "Ocurrio un error al crear el usuario: ${result.errorMessage}", Toast.LENGTH_LONG).show()
+        }
+        }
+    } else {
+        Toast.makeText(context, "Existen campos vacios", Toast.LENGTH_SHORT).show()
+    }
 }

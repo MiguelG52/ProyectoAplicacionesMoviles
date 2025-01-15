@@ -103,11 +103,11 @@ private suspend fun signInUser(email: String, password: String, navigateToHome: 
         when (val result = auth.signInWithEmailAndPassword(email, password)) {
             is AuthRes.Success -> {
                 navigateToHome()
+
             }
             is AuthRes.Error -> {
                 Toast.makeText(context, "Error SignUp: ${result.errorMessage}", Toast.LENGTH_SHORT).show()
             }
-
         }
     } else {
         Toast.makeText(context, "Existen campos vacios", Toast.LENGTH_SHORT).show()

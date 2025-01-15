@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 import android.content.Context
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 sealed class AuthRes<out T> {
@@ -15,12 +16,24 @@ sealed class AuthRes<out T> {
 }
 class AuthManager(private val context: Context) {
     private val auth: FirebaseAuth by lazy { Firebase.auth }
-    private val signInClient = Identity.getSignInClient(context)
+    private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
-    suspend fun createUserWithEmailAndPassword(email: String, password: String): AuthRes<FirebaseUser?> {
+
+    suspend fun createUserWithEmailAndPassword(email: String, password: String, name: String, birthDate: String): AuthRes<FirebaseUser?> {
         return try {
             val authResult = auth.createUserWithEmailAndPassword(email, password).await()
-            AuthRes.Success(authResult.user)
+            val user = authResult.user
+
+            user?.let {
+                val userData = mapOf(
+                    "name" to name,
+                    "birthDate" to birthDate,
+                    "email" to email
+                )
+                firestore.collection("usuarios").document(user.uid).set(userData).await()
+            }
+
+            AuthRes.Success(user)
         } catch(e: Exception) {
             AuthRes.Error(e.message ?: "Error al crear el usuario")
         }
