@@ -1,5 +1,6 @@
 package com.mobileapplication.proyectoaplicacionesmoviles.navigation
 
+import com.mobileapplication.proyectoaplicacionesmoviles.models.Content
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,5 +18,5 @@ object Home
 @Serializable
 object TabBar
 @Serializable
-object ContentDetails
+data class ContentDetails(val date: List<Content>)
 

@@ -72,6 +72,9 @@ dependencies {
     implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.2.3")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+
     implementation(libs.firebaseAuth)
     implementation(libs.firebaseCloud)
     implementation(libs.firebaseFirestore)

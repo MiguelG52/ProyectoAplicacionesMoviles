@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,10 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mobileapplication.proyectoaplicacionesmoviles.components.QuestionCard
 import com.mobileapplication.proyectoaplicacionesmoviles.data.cuestionario
+import com.mobileapplication.proyectoaplicacionesmoviles.firebase.AuthManager
 
 @Preview
 @Composable
-fun TestScreen(){
+fun TestScreen(authManager: AuthManager) {
 
     var currentStep by remember { mutableIntStateOf(0) }
     val stepSize = 5

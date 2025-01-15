@@ -1,9 +1,11 @@
 package com.mobileapplication.proyectoaplicacionesmoviles.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -18,20 +20,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.mobileapplication.proyectoaplicacionesmoviles.R
+import com.mobileapplication.proyectoaplicacionesmoviles.models.Content
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.BlueSecondary
 import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.GraySecondary
+import kotlinx.serialization.json.Json
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentDetailsScreen(){
+fun ContentDetailsScreen(contentJson: String?){
+    val content = contentJson?.let { Json.decodeFromString<Content>(it) }
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -54,29 +63,47 @@ fun ContentDetailsScreen(){
                                 .size(30.dp)
                                 .padding(end = 8.dp)
                         )
-                        Text(
-                            text = "",
-                            fontWeight = FontWeight.SemiBold,
-                            color = BlueSecondary,
-                            modifier = Modifier.weight(1f)
-                        )
+                        content?.let {
+                            Text(
+                                text = it.name,
+                                fontWeight = FontWeight.SemiBold,
+                                color = BlueSecondary,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
                     }
                 },
                 scrollBehavior = scrollBehavior
             )
-        }){paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
-                .fillMaxHeight()
-                .background(GraySecondary).verticalScroll(
-                    rememberScrollState()
+        }){
+        content?.let {
+            Column(
+                modifier = Modifier.padding(16.dp)
+                    .fillMaxHeight()
+                    .background(GraySecondary).verticalScroll(
+                        rememberScrollState()
+                    )
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(content.img),
+                    contentDescription = content.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
                 )
-        ) {
-            Text("Hola")
-        }
-    }
-}
-@Composable
-fun DetailBody(){
+                Spacer(modifier = Modifier.size(16.dp))
+                Text(
+                    text = it.description,
+                    fontWeight = FontWeight.SemiBold,
+                    color = BlueSecondary,
+                    modifier = Modifier.weight(1f)
+                )
 
+            }
+
+        }
+
+    }
 }

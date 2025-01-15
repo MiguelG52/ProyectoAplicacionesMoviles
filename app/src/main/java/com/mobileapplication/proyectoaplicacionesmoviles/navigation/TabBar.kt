@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mobileapplication.proyectoaplicacionesmoviles.R
+import com.mobileapplication.proyectoaplicacionesmoviles.firebase.AuthManager
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.AboutScreen
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.HomeScreen
 import com.mobileapplication.proyectoaplicacionesmoviles.screens.ProfileScreen
@@ -35,7 +36,7 @@ import com.mobileapplication.proyectoaplicacionesmoviles.ui.theme.GraySecondary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabBar(navController: NavHostController) {
+fun TabBar(navController: NavHostController, authManager: AuthManager) {
 
     val tabs = listOf("Inicio", "Perfil", "Test", "Acerca De")
     val titles = listOf("Inicio", "Perfil", "Test", "Acerca De")
@@ -128,9 +129,9 @@ fun TabBar(navController: NavHostController) {
             ) {
             // Contenido de las pestañas
             when (selectedTabIndex) {
-                0 -> HomeScreen(navController)
-                1 -> ProfileScreen()
-                2 -> TestScreen()
+                0 -> HomeScreen(navController, authManager)
+                1 -> ProfileScreen(authManager)
+                2 -> TestScreen(authManager)
                 3 -> AboutScreen()
 
             }
